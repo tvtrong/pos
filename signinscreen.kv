@@ -1,0 +1,102 @@
+#:import utils kivy.utils
+<SignInScreen>:
+    on_enter:
+        root.animate_card(card)
+        root.animate_background(background)
+    BackgroundLayer:
+        id: background
+    # MDCard:
+    MDCard:
+        background: 'img/card.png'
+        opacity: .9
+        id: card
+        orientation: 'vertical'
+        size_hint: [.5, .6]
+        pos_hint: {'center_x': .5, 'center_y': 0}
+        padding: [15,0,15,0]
+        spacing: 14
+        elevation: 19
+        GridLayout:
+            cols: 3
+            Image:
+                source: 'img/logo.png'
+                elevation: 10
+        MDTextField:
+            id: username_field
+            hint_text: 'Email'
+            icon_right: 'email'
+            size_hint: [.8, 0]
+            pos_hint: {'center_x': .5}
+            font_size: 20
+            color_active: [1,1,1,1]
+        MDTextField:
+            id: pwd_field
+            hint_text: 'Password'
+            icon_right: 'eye-off'
+            size_hint: [.8, 0]
+            pos_hint: {'center_x': .5}
+            font_size: 20
+            color_active: [1,1,1,1]
+            password: True
+            on_text_validate: root.validate_user()
+        MDFloatingActionButton:
+            text: 'Sign In'
+            icon: 'login'
+            size_hint: [.35, 0]
+            pos_hint: {'center_x': .5}
+            font_size: 20
+            on_release:
+                root.login()
+                root.username_changer()
+            icon: 'img/login.png'
+            id: log_in_button
+            bold: True
+            elevation_normal: 12
+    MDBottomAppBar:
+        MDToolbar:
+            title: "Maintained by RQS Co.Ltd"
+            icon: "theme-light-dark"
+            type: 'bottom'
+            mode: "end"
+            left_action_items: [["pan-left",  lambda x : root.change_screen('welcome_screen')]]
+            right_action_items: [["calendar-clock",  lambda x: root.show_date_picker()]]
+            on_action_button: root.show_theme_picker()
+<BackgroundLayer@BoxLayout>:
+    orientation: 'vertical'
+    canvas.before:
+        Rectangle:
+            size: self.size
+            pos: self.pos
+            source: 'img/bgl.jpg'
+    BoxLayout:
+        id: bx
+        orientation: 'vertical'
+        size_hint_y: .1
+        canvas.before:
+            RoundedRectangle:
+                pos: self.pos
+                size: self.size
+                source: 'img/top.png'
+                radius: [0,0,60,60]
+    BoxLayout:
+        orientation: 'horizontal'
+        pos_hint: {'center_x': .565}
+        padding: [50,0,0,0]
+        Widget:
+            canvas.before:
+                Color:
+                    rgba: utils.get_color_from_hex('#8A2BE2')
+                Ellipse:
+                    pos: self.pos
+        Widget:
+            canvas.before:
+                Color:
+                    rgba: utils.get_color_from_hex('#BFFF00')
+                Ellipse:
+                    pos: self.pos
+        Widget:
+            canvas.before:
+                Color:
+                    rgba: utils.get_color_from_hex('#00FFFF')
+                Ellipse:
+                    pos: self.pos

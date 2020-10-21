@@ -1,0 +1,40 @@
+#:import window kivy.core.window
+<WelcomeScreen>:
+    FloatLayout:
+        canvas:
+            Rectangle:
+                size: self.size
+                pos: self.pos
+                source: 'img/bg.png'
+        Image:
+            source: 'img/logo.png'
+            pos_hint: {"center_x": .5,'center_y': .6}
+        MDFloatingActionButton:
+            icon: 'img/exit.png'
+            elevation_normal: 12
+            id: close_button
+            size_hint: [.11, 0.06]
+            bold: True
+            pos_hint: {"center_x": .5,'center_y': .05}
+            on_release:
+                root.stop()
+        MDFloatingActionButton:
+            icon: 'img/signin.png'
+            id: log_in_button
+            size_hint: [.15, 0.06]
+            bold: True
+            elevation_normal: 12
+            pos_hint: {"center_x": .35,'center_y': .21}
+            on_release:
+                root.parent.current = "sign_in_screen"
+        MDFloatingActionButton:
+            icon: 'img/signup.png'
+            elevation_normal: 12
+            id: signup_button
+            size_hint: [.15, 0.08]
+            bold: True
+            pos_hint: {"center_x": .645,'center_y': .19}
+            on_release:
+                root.parent.current = "create_account_screen"
+
+

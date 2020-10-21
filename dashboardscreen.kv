@@ -1,0 +1,200 @@
+#:import utils kivy.utils
+<FlatButton@ButtonBehavior+Label>:
+    text: 'default'
+<SwipeToDeleteItem>:
+    size_hint_y: None
+    height: content.height
+    type_swipe: "auto"
+    on_swipe_complete: root.on_swipe_complete(root)
+
+    MDCardSwipeLayerBox:
+        padding: "8dp"
+        MDIconButton:
+            icon: "trash-can"
+            pos_hint: {"center_y": .5}
+            on_release: root.on_swipe_complete(root)
+    MDCardSwipeFrontBox:
+        ThreeLineListItem:
+            id: content
+            text: root.text
+            secondary_text: root.secondary_text
+            tertiary_text: root.tertiary_text
+            _no_ripple_effect: True
+
+<MainDashboardScreen>:
+    name: 'mainscreen'
+    id: mainscreen
+    on_enter:
+        root.add_tbl()
+
+    MDToolbar:
+        id: toolbar
+        md_bg_color: .2, .2, .2, 1
+        specific_text_color: 1, 1, 1, 1
+        pos_hint: {"top": 1}
+        elevation: 10
+        bold: True
+        title: ""
+        left_action_items: [["icons/logo.ico", lambda x: nav_drawer.set_state("open")]]
+        right_action_items: [["img/logout.png", lambda x: root.logout()]]
+
+    NavigationLayout:
+        id: nav_l
+        x: toolbar.height
+        ScreenManager:
+            id: screen_manager
+            Screen:
+                name: "scrn_b"
+                id: scrn_b
+                BoxLayout:
+                    orientation: 'horizontal'
+                    pos_hint: {'top': .9}
+                    size_hint_y: .9
+                    padding: (5,5)
+                    canvas.before:
+                        Color:
+                            rgba: (1,1,1,1)
+                        Rectangle:
+                            size: self.size
+                            pos: self.pos
+                    BoxLayout:
+                        orientation: 'vertical'
+                        size_hint_x: .7
+                        padding: (5,5)
+#                        DropDownWidget:
+                        BoxLayout:
+                            orientation: 'vertical'
+                            size_hint_x: .9
+                            pos_hint: {'center_x': .5}
+                            id: tbl
+                        MDTextField:
+                            id: inpt_search
+                            pos_hint: {'center_x': .5}
+                            size_hint_x: .6
+                            size_hint_y: None
+                            height: 50
+                            hint_text: 'Searching..'
+                            mode: 'rectangle'
+                    BoxLayout:
+                        orientation: 'vertical'
+                        size_hint_x: .3
+                        padding: (5,5)
+                        MDTextField:
+                            id: inpt_scan
+                            size_hint_y: None
+                            height: 50
+                            pos_hint: {'center_x': .5}
+                            size_hint_x: .9
+                            hint_text: 'Scanning..'
+                            mode: 'rectangle'
+                        BoxLayout:
+                            orientation: 'vertical'
+                            pos_hint: {'center_x': .5}
+                            size_hint_y: .6
+                            size_hint_x: .9
+                            ScrollView:
+                                MDList:
+                                    id: container
+                                    padding: 0
+                        BoxLayout:
+                            orientation: 'horizontal'
+                            size_hint_y: .1
+                            canvas.before:
+                                Color:
+                                    rgba: utils.get_color_from_hex('#472F9C')
+                                Rectangle:
+                                    size: self.size
+                                    pos: self.pos
+                            MDFloatingActionButton:
+                                icon: 'img/printer.png'
+                                elevation_normal: 12
+                                id: _print
+        #                            size_hint: [.15, 0.08]
+                                bold: True
+                                pos_hint: {"center_x": .5,'center_y': .5}
+                                on_release: root._to_xlsx()
+                            MDLabel:
+                                id: total_pay
+                                text: '666.599.000 vnd'
+                                bold: True
+                                color: (1,1,1,1)
+                                font_size: 20
+                                halign: 'right'
+                                pos_hint: {'center_y': .5}
+
+            Screen:
+                name: "scrn_r"
+                id: scrn_r
+                MDLabel:
+                    text: "Reports here"
+                    halign: "center"
+        MDNavigationDrawer:
+            id: nav_drawer
+            type: "standard"
+            ContentNavigationDrawer:
+                screen_manager: screen_manager
+                nav_drawer: nav_drawer
+                id: nv
+                canvas.before:
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+                        source: 'img/leftnav.png'
+
+<ContentNavigationDrawer>:
+    orientation: "vertical"
+    padding: "8dp"
+    spacing: "8dp"
+    id: nv
+    AnchorLayout:
+        anchor_x: "center"
+        anchor_y: 'top'
+        size_hint_y: None
+        height: avatar.height
+
+        Image:
+            id: avatar
+            size_hint: None, None
+            size: "150dp", "150dp"
+            source: "img/account.png"
+
+    MDLabel:
+        id: u_name
+        text: ""
+        font_style: "Button"
+        bold: True
+        color: (1,0,0,1)
+        font_size: 35
+        size_hint_y: None
+        height: self.texture_size[1]
+        pos_hint: {'center_x': .9}
+
+    MDLabel:
+        id: u_email
+        text: ""
+        font_style: "Caption"
+        color: (0,0,1,1)
+        font_size: 20
+        size_hint_y: None
+        height: self.texture_size[1]
+        pos_hint: {'center_x': .7}
+    ScrollView:
+        MDList:
+            color: (1,1,0,1)
+            OneLineAvatarListItem:
+                id: bill
+                text: "Bills"
+                on_press:
+                    root.nav_drawer.set_state("close")
+                    root.screen_manager.current = "scrn_b"
+                IconLeftWidget:
+                    icon: 'img/barcode.png'
+
+            OneLineAvatarListItem:
+                id: report
+                text: "Reports"
+                on_press:
+                    root.nav_drawer.set_state("close")
+                    root.screen_manager.current = "scrn_r"
+                IconLeftWidget:
+                    icon: 'chart-line'

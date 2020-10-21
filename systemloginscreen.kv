@@ -1,0 +1,26 @@
+#:import Animation kivy.animation.Animation
+#:import SlideTransition kivy.uix.screenmanager.SlideTransition
+<SystemLoginScreen>:
+    primary_color: .065, .45, .56, 1
+    secondary_color: 1, 0, 0, 1
+    tertiary_color: 1, 0, 0, 1
+    canvas:
+        Rectangle:
+            size: self.size
+            pos: self.pos
+            source: 'img/main.jpg'
+    screen_manager: screen_manager.__self__
+    ScreenManager:
+        id: screen_manager
+        WelcomeScreen:
+            id: welcome_screen
+            name: "welcome_screen"
+        SignInScreen:
+            id: sign_in_screen
+            name: "sign_in_screen"
+        CreateAccountScreen:
+            id: create_account_screen
+            name: "create_account_screen"
+        MainDashboardScreen:
+            id: dashboard_screen
+            name: 'dashboard_screen'

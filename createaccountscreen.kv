@@ -1,0 +1,63 @@
+
+<CreateAccountScreen>:
+    FloatLayout:
+        canvas.before:
+            Rectangle:
+                size: self.size
+                pos: self.pos
+                source: 'img/background.png'
+        Image:
+            source: 'img/banner.png'
+            opacity: .15
+            halign:'center'
+            pos_hint: {'center_y':0.5}
+        MDTextField:
+            id:signup_email
+            color: (1,1,1,1)
+            pos_hint: {'center_y':0.6,'center_x':0.5}
+            size_hint : (0.7,0.1)
+            hint_text: 'Email'
+            helper_text:'Required'
+            helper_text_mode:  'on_error'
+            icon_right: 'email'
+            icon_right_color: app.theme_cls.primary_color
+            required: True
+            mode: "rectangle"
+        MDTextField:
+            id:signup_username
+            color: (1,1,1,1)
+            pos_hint: {'center_y':0.75,'center_x':0.5}
+            size_hint : (0.7,0.1)
+            hint_text: 'Username'
+            helper_text:'Required'
+            helper_text_mode:  'on_error'
+            icon_right: 'account'
+            icon_right_color: app.theme_cls.primary_color
+            required: True
+        MDTextField:
+            id:signup_password
+            color: (1,1,1,1)
+            pos_hint: {'center_y':0.4,'center_x':0.5}
+            size_hint : (0.7,0.1)
+            hint_text: 'Password'
+            helper_text:'Required'
+            helper_text_mode:  'on_error'
+            icon_right: 'eye-off'
+            icon_right_color: app.theme_cls.primary_color
+            required: True
+            mode: "rectangle"
+        MDFloatingActionButton:
+            icon: 'img/register.png'
+            size_hint: (0.13,0.09)
+            elevation: 13
+            pos_hint: {'center_x':0.5,'center_y':0.2}
+            on_press: root.signup()
+        MDTextButton:
+            text: 'Already have an account'
+            pos_hint: {'center_x':0.5,'center_y':0.1}
+            on_press:
+                root.manager.current = 'sign_in_screen'
+                root.manager.transition.direction = 'down'
+
+
+
